@@ -56,11 +56,11 @@ class Publication(models.Model):
     body = models.TextField()
     type = models.CharField(max_length=255, choices=publication_types)
     
-    comments = models.ManyToManyField(Comment, related_name='publication_comments')
-    upvotes = models.ManyToManyField(User, related_name='publication_upvotes')
-    attachments = models.ManyToManyField(Attachment)
-    bookmarks = models.ManyToManyField(Bookmark)
-    tags = models.ManyToManyField(Tag)
+    comments = models.ManyToManyField(Comment, related_name='publication_comments',blank=True, null=True)
+    upvotes = models.ManyToManyField(User, related_name='publication_upvotes',blank=True, null=True)
+    attachments = models.ManyToManyField(Attachment,blank=True, null=True)
+    bookmarks = models.ManyToManyField(Bookmark,blank=True, null=True)
+    tags = models.ManyToManyField(Tag,blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -93,8 +93,9 @@ class Neighborhood(models.Model):
 
 class Place(models.Model):
     place_types = (
-        ('commerce', 'Comércio'),
-        ('leisure', 'Lazer'),
+        ('commerce', 'Comercio'),
+        ('donations', 'Doacoes'),
+        ('colect','Coleta'),
         ('other', 'Outros'),
     )
 
@@ -103,17 +104,17 @@ class Place(models.Model):
     instagram = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
     type = models.CharField(max_length=255, choices=place_types)
-    cover = models.ImageField(upload_to='uploads/places/')
+    # cover = models.ImageField(upload_to='uploads/places/')
 
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True) 
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     
-    comments = models.ManyToManyField(Comment, related_name='places_comments')
-    upvotes = models.ManyToManyField(User, related_name='places_upvotes')
-    attachments = models.ManyToManyField(Attachment)
-    bookmarks = models.ManyToManyField(Bookmark)
-    tags = models.ManyToManyField(Tag)
+    comments = models.ManyToManyField(Comment, related_name='places_comments',blank=True, null=True)
+    upvotes = models.ManyToManyField(User, related_name='places_upvotes',blank=True, null=True)
+    attachments = models.ManyToManyField(Attachment,blank=True, null=True)
+    bookmarks = models.ManyToManyField(Bookmark,blank=True, null=True)
+    tags = models.ManyToManyField(Tag,blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

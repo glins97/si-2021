@@ -96,7 +96,6 @@ class PlaceAdmin(admin.ModelAdmin):
         'instagram',
         'description',
         'type',
-        'cover',
         'city',
         'neighborhood',
         'address',
