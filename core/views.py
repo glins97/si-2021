@@ -1,7 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from django.contrib.auth.models import User
 from core.models import Attachment, Tag, Bookmark, Comment, Publication, Country, State, City, Neighborhood, Place, AchievementType, Achievement, Profile
-from core.serializers import AttachmentSerializer, TagSerializer, BookmarkSerializer, CommentSerializer, PublicationSerializer, CountrySerializer, StateSerializer, CitySerializer, NeighborhoodSerializer, PlaceSerializer, AchievementTypeSerializer, AchievementSerializer, ProfileSerializer
+from core.serializers import AttachmentSerializer, TagSerializer, BookmarkSerializer, CommentSerializer, PublicationSerializer, CountrySerializer, StateSerializer, CitySerializer, NeighborhoodSerializer, PlaceSerializer, AchievementTypeSerializer, AchievementSerializer, ProfileSerializer, UserSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -488,6 +490,42 @@ def profile_detail(request, pk):
 
     elif request.method == 'PUT':
         serializer = ProfileSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        item.delete()
+        return Response(status=204)
+
+@api_view(['GET', 'POST'])
+def user_list(request):
+    if request.method == 'GET':
+        items = User.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        serializer = UserSerializer(items, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def user_detail(request, pk):
+    try:
+        item = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return Response(status=404)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(item)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = UserSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

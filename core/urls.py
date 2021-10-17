@@ -44,6 +44,9 @@ urlpatterns = [
     url(r'^profile/(?P<pk>[0-9]+)/$', views.profile_detail),
     url(r'^profile/$', views.profile_list),
 
+    url(r'^user/(?P<pk>[0-9]+)/$', views.user_detail),
+    url(r'^user/$', views.user_list),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+from django.contrib.auth.models import User
 from core.models import Attachment, Tag, Bookmark, Comment, Publication, Country, State, City, Neighborhood, Place, AchievementType, Achievement, Profile
 
 
@@ -90,4 +91,11 @@ class ProfileSerializer(ModelSerializer):
 
     class Meta:
         model = Profile
+        fields = '__all__'
+
+
+class UserSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
         fields = '__all__'
