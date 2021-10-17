@@ -9,7 +9,7 @@ from core.serializers import AttachmentSerializer, TagSerializer, BookmarkSerial
 @api_view(['GET', 'POST'])
 def attachment_list(request):
     if request.method == 'GET':
-        items = Attachment.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Attachment.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = AttachmentSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -47,7 +47,7 @@ def attachment_detail(request, pk):
 @api_view(['GET', 'POST'])
 def tag_list(request):
     if request.method == 'GET':
-        items = Tag.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Tag.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = TagSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -85,7 +85,7 @@ def tag_detail(request, pk):
 @api_view(['GET', 'POST'])
 def bookmark_list(request):
     if request.method == 'GET':
-        items = Bookmark.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Bookmark.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = BookmarkSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -123,7 +123,7 @@ def bookmark_detail(request, pk):
 @api_view(['GET', 'POST'])
 def comment_list(request):
     if request.method == 'GET':
-        items = Comment.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Comment.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = CommentSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -161,7 +161,7 @@ def comment_detail(request, pk):
 @api_view(['GET', 'POST'])
 def publication_list(request):
     if request.method == 'GET':
-        items = Publication.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Publication.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = PublicationSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -199,7 +199,7 @@ def publication_detail(request, pk):
 @api_view(['GET', 'POST'])
 def country_list(request):
     if request.method == 'GET':
-        items = Country.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Country.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = CountrySerializer(items, many=True)
         return Response(serializer.data)
 
@@ -237,7 +237,7 @@ def country_detail(request, pk):
 @api_view(['GET', 'POST'])
 def state_list(request):
     if request.method == 'GET':
-        items = State.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = State.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = StateSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -275,7 +275,7 @@ def state_detail(request, pk):
 @api_view(['GET', 'POST'])
 def city_list(request):
     if request.method == 'GET':
-        items = City.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = City.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = CitySerializer(items, many=True)
         return Response(serializer.data)
 
@@ -313,7 +313,7 @@ def city_detail(request, pk):
 @api_view(['GET', 'POST'])
 def neighborhood_list(request):
     if request.method == 'GET':
-        items = Neighborhood.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Neighborhood.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = NeighborhoodSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -351,7 +351,7 @@ def neighborhood_detail(request, pk):
 @api_view(['GET', 'POST'])
 def place_list(request):
     if request.method == 'GET':
-        items = Place.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Place.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = PlaceSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -389,7 +389,7 @@ def place_detail(request, pk):
 @api_view(['GET', 'POST'])
 def achievementtype_list(request):
     if request.method == 'GET':
-        items = AchievementType.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = AchievementType.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = AchievementTypeSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -427,7 +427,7 @@ def achievementtype_detail(request, pk):
 @api_view(['GET', 'POST'])
 def achievement_list(request):
     if request.method == 'GET':
-        items = Achievement.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Achievement.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = AchievementSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -465,7 +465,7 @@ def achievement_detail(request, pk):
 @api_view(['GET', 'POST'])
 def profile_list(request):
     if request.method == 'GET':
-        items = Profile.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = Profile.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = ProfileSerializer(items, many=True)
         return Response(serializer.data)
 
@@ -502,7 +502,7 @@ def profile_detail(request, pk):
 @api_view(['GET', 'POST'])
 def user_list(request):
     if request.method == 'GET':
-        items = User.objects.order_by('pk').filter(**{key: request.data[key][0] for key in request.data})
+        items = User.objects.order_by('pk').filter(**{key: request.data[key] for key in request.data})
         serializer = UserSerializer(items, many=True)
         return Response(serializer.data)
 
