@@ -21,32 +21,24 @@ class Tag(models.Model):
         return self.name
 
 
-class Bookmark(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)    
-
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)    
     body = models.CharField(max_length=100)
 
-    comments = models.ManyToManyField('Comment', related_name='comment_comments')
-    upvotes = models.ManyToManyField(User, related_name='comment_upvotes')
-    attachments = models.ManyToManyField(Attachment)
-    bookmarks = models.ManyToManyField(Bookmark)
-    tags = models.ManyToManyField(Tag)
+    comments = models.ManyToManyField('Comment', related_name='comment_comments', blank=True, null=True)
+    upvotes = models.ManyToManyField(User, related_name='comment_upvotes', blank=True, null=True)
+    attachments = models.ManyToManyField(Attachment, blank=True, null=True)
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Publication(models.Model):
     publication_types = (
         ('hint', 'Dica'),
         ('discussion', 'Discussão'),
-        ('notícia', 'Notícia'),
+        ('news', 'Notícia'),
         ('question', 'Pergunta'),
         ('other', 'Outros'),
     )
@@ -59,7 +51,6 @@ class Publication(models.Model):
     comments = models.ManyToManyField(Comment, related_name='publication_comments',blank=True, null=True)
     upvotes = models.ManyToManyField(User, related_name='publication_upvotes',blank=True, null=True)
     attachments = models.ManyToManyField(Attachment,blank=True, null=True)
-    bookmarks = models.ManyToManyField(Bookmark,blank=True, null=True)
     tags = models.ManyToManyField(Tag,blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,6 +58,11 @@ class Publication(models.Model):
         
     def __str__(self):
         return self.title
+
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    
+    publication = models.ForeignKey(Publication, on_delete=models.CASCADE)    
 
 
 class Country(models.Model):
@@ -113,7 +109,6 @@ class Place(models.Model):
     comments = models.ManyToManyField(Comment, related_name='places_comments',blank=True, null=True)
     upvotes = models.ManyToManyField(User, related_name='places_upvotes',blank=True, null=True)
     attachments = models.ManyToManyField(Attachment,blank=True, null=True)
-    bookmarks = models.ManyToManyField(Bookmark,blank=True, null=True)
     tags = models.ManyToManyField(Tag,blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

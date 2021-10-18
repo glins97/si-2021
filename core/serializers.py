@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, CharField, JSONField, FileField
 from django.contrib.auth.models import User
 from core.models import Attachment, Tag, Bookmark, Comment, Publication, Country, State, City, Neighborhood, Place, AchievementType, Achievement, Profile
 
@@ -25,18 +25,23 @@ class BookmarkSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
+    user__avatar = CharField(source='user.profile.avatar', required=False)
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'user', 'user__avatar', 'body', 'comments', 'upvotes', 'attachments', 'tags', 'created_at', 'updated_at']
 
 
 class PublicationSerializer(ModelSerializer):
+    user__first_name = CharField(source='user.first_name', required=False)
+    user__last_name = CharField(source='user.last_name', required=False)
+    user__username = CharField(source='user.username', required=False)
+    user__avatar = CharField(source='user.profile.avatar', required=False)
 
     class Meta:
         model = Publication
-        fields = '__all__'
-
+        fields = ['id', 'title', 'body', 'type', 'created_at', 'updated_at', 'user', 'user__first_name', 'user__last_name', 'user__username', 'user__avatar', 'comments', 'upvotes']
+        depth = 2
 
 class CountrySerializer(ModelSerializer):
 
@@ -95,7 +100,9 @@ class ProfileSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
+    avatar = FileField(source='profile.avatar')
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'first_name', 'last_name', 'password', 'avatar']
+        depth = 2

@@ -32,7 +32,6 @@ class CommentAdmin(admin.ModelAdmin):
         'comments',
         'upvotes',
         'attachments',
-        'bookmarks',
         'tags',
     )
     date_hierarchy = 'created_at'
@@ -54,7 +53,6 @@ class PublicationAdmin(admin.ModelAdmin):
         'comments',
         'upvotes',
         'attachments',
-        'bookmarks',
         'tags',
     )
     date_hierarchy = 'created_at'
@@ -107,7 +105,6 @@ class PlaceAdmin(admin.ModelAdmin):
         'comments',
         'upvotes',
         'attachments',
-        'bookmarks',
         'tags',
     )
     search_fields = ('name',)
