@@ -40,8 +40,7 @@ class PublicationSerializer(ModelSerializer):
 
     class Meta:
         model = Publication
-        fields = ['id', 'title', 'body', 'type', 'created_at', 'updated_at', 'user', 'user__first_name', 'user__last_name', 'user__username', 'user__avatar', 'comments', 'upvotes']
-        depth = 2
+        fields = ['user', 'title', 'body', 'type', 'created_at', 'updated_at', 'user', 'user__first_name', 'user__last_name', 'user__username', 'user__avatar', 'comments', 'upvotes']
 
 class CountrySerializer(ModelSerializer):
 
@@ -100,9 +99,9 @@ class ProfileSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
-    avatar = FileField(source='profile.avatar')
+    avatar = FileField(source='profile.avatar', required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password', 'avatar']
+        fields = ['id', 'username', 'first_name', 'last_name', 'password', 'avatar']
         depth = 2

@@ -140,6 +140,32 @@ def comment_list(request):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+@api_view(['GET', 'POST'])
+def upvote_list(request):
+    user_id = dict(request.GET, **request.data)['user'][0]
+    user = User.objects.get(id=user_id)
+    if request.method == 'GET':
+        items = Publication.objects.order_by('pk').filter(upvotes__in=[user])
+        serializer = PublicationSerializer(items, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        data = dict(request.POST, **request.data)
+        publication = Publication.objects.get(id=data['publication'][0])
+        
+        upvoted = True
+        if user in publication.upvotes.all():
+            upvoted = False
+            publication.upvotes.remove(user)    
+        else:
+            publication.upvotes.add(user)    
+
+        return Response({
+            'publication': publication.id,
+            'user': user.id,
+            'upvoted': upvoted
+        }, status=201)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def comment_detail(request, pk):
